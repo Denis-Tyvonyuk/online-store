@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Button, Card, Container, Form, Row } from "react-bootstrap";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../utils/consts";
-import { login, registration } from "../http/userAPI";
+import { getUserInfo, login, registration } from "../http/userAPI";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
+import { createOrGetBasket } from "../http/deviceAPI";
 
 const Auth = observer(() => {
   const { user } = useContext(Context);
@@ -17,13 +18,18 @@ const Auth = observer(() => {
   const click = async () => {
     try {
       let data;
+      let basket;
+
       if (isLogin) {
         data = await login(email, password);
+        basket = await createOrGetBasket(data.id);
       } else {
         data = await registration(email, password);
+        basket = await createOrGetBasket(data.id);
       }
 
-      user.setUser(user);
+      user.setUser(true);
+
       user.setIsAuth(true);
       history(SHOP_ROUTE);
     } catch (e) {

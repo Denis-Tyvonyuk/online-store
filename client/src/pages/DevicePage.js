@@ -1,16 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import bigStar from "../assets/bigStar.png";
 import { useParams } from "react-router-dom";
-import { fetchOneDevice } from "../http/deviceAPI";
+import {
+  fetchOneDevice,
+  createBasketDevice,
+  createOrGetBasket,
+  getBasket,
+} from "../http/deviceAPI";
+import { Context } from "..";
+import { getUserInfo } from "../http/userAPI";
 
 const DevicePage = () => {
   const [device, setDevice] = useState({ info: [] });
-
+  const [userId, setUserId] = useState();
   const { id } = useParams();
+  const [basketId, setBasketId] = useState();
 
   useEffect(() => {
     fetchOneDevice(id).then((data) => setDevice(data));
+  }, []);
+
+  useEffect(() => {
+    const func = async () => {
+      // Fetch user info and handle the promise
+      await getUserInfo().then((user) => {
+        setUserId(user.id);
+
+        createOrGetBasket(user.id).then((basket) => {
+          setBasketId(basket);
+        });
+      });
+      // Create or get basket and handle the promise
+    };
+    func();
   }, []);
 
   return (
@@ -51,7 +74,12 @@ const DevicePage = () => {
             }}
           >
             <h3>{device.price}</h3>
-            <Button variant={"outline-dark"}>put into basket</Button>
+            <Button
+              variant={"outline-dark"}
+              onClick={() => createBasketDevice(basketId, device.id)}
+            >
+              put into basket
+            </Button>
           </Card>
         </Col>
       </Row>

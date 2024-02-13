@@ -72,7 +72,6 @@ class UserController {
         req.headers.authorization,
         "/n ssdsasassasa"
       );
-      const token = generateJwt("admin", "admin@", "ADMIN");
 
       return res.json({ token });
     }
