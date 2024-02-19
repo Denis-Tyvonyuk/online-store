@@ -19,13 +19,18 @@ export const login = async (email, password) => {
 
 export const check = async () => {
   const { data } = await $authHost.get("api/user/auth");
+
   localStorage.setItem("token", data.token);
   return jwtDecode(data.token);
 };
 
 export const getUserInfo = async () => {
-  const { data } = await $authHost.get("api/user/auth");
-  localStorage.setItem("token", data.token);
-  const info = jwtDecode(data.token);
-  return info;
+  try {
+    const { data } = await $authHost.get("api/user/auth");
+    localStorage.setItem("token", data.token);
+    const info = jwtDecode(data.token);
+    return info;
+  } catch {
+    return console.log("the user is not registered");
+  }
 };

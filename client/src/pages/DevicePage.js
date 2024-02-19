@@ -25,11 +25,14 @@ const DevicePage = () => {
     const func = async () => {
       // Fetch user info and handle the promise
       await getUserInfo().then((user) => {
-        setUserId(user.id);
+        if ((user = "the user is not registered")) {
+        } else {
+          setUserId(user.id);
 
-        createOrGetBasket(user.id).then((basket) => {
-          setBasketId(basket);
-        });
+          createOrGetBasket(user.id).then((basket) => {
+            setBasketId(basket);
+          });
+        }
       });
       // Create or get basket and handle the promise
     };

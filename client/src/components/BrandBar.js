@@ -6,12 +6,20 @@ import { Card, Row } from "react-bootstrap";
 const BrandBar = observer(() => {
   const { device } = useContext(Context);
 
+  const selectBrand = (brand) => {
+    if (device.selectedBrand === brand || !device.selectedBrand) {
+      device.setSelectedBrand({});
+    } else {
+      device.setSelectedBrand(brand);
+    }
+  };
+
   return (
     <div className="d-flex" style={{ flexWrap: "wrap", flexDirection: "row" }}>
       {device.brands.map((brand) => (
         <Card
           key={brand.id}
-          onClick={() => device.setSelectedBrand(brand)}
+          onClick={() => selectBrand(brand)}
           border={brand.id === device.selectedBrand.id ? "danger" : "light"}
           style={{ cursor: "pointer" }}
           className="p-3"

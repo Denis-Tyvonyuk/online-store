@@ -6,6 +6,21 @@ export const createType = async (type) => {
   return data;
 };
 
+export const deleteType = async (typeName) => {
+  try {
+    const response = await $authHost.delete("api/type", {
+      data: { name: typeName },
+    });
+
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting type:", error);
+    // You might want to handle the error or log it appropriately
+    throw error; // Rethrow the error if needed
+  }
+};
+
 export const fetchTypes = async () => {
   const { data } = await $host.get("api/type");
   return data;
@@ -14,6 +29,21 @@ export const fetchTypes = async () => {
 export const createBrand = async (brand) => {
   const { data } = await $authHost.post("api/brand", brand);
   return data;
+};
+
+export const deleteBrand = async (brandName) => {
+  try {
+    const response = await $authHost.delete("api/brand", {
+      data: { name: brandName },
+    });
+
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting brand:", error);
+    // You might want to handle the error or log it appropriately
+    throw error; // Rethrow the error if needed
+  }
 };
 
 export const fetchBrands = async (typeId, brandId, page, limit = 5) => {

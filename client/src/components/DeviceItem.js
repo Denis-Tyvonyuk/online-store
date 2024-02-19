@@ -20,13 +20,13 @@ const DeviceItem = ({ device }) => {
           src={process.env.REACT_APP_API_URL + device.img}
         />
         <div className="text-black-50 mt-1 d-flex justify-content-between align-items-center">
-          <div>Samsung</div>
+          <h5>{device.name}</h5>
           <div className="d-flex align-items-center">
             <div>{device.rating}</div>
             <Image width={18} height={18} src={star} />
           </div>
         </div>
-        <div>{device.name}</div>
+        <div>{device.price}</div>
       </Card>
     </Col>
   );

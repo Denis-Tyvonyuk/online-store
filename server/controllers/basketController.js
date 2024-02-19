@@ -43,7 +43,18 @@ class BasketController {
     }
   }
 
-  async deleteBasket(req, res) {
+  async createBasketDevice(req, res) {
+    try {
+      const { basketId, deviceId } = req.body;
+      const basketdevice = await BasketDevice.create({ basketId, deviceId });
+      return res.json(basketdevice);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
+  async deleteBasketDevice(req, res) {
     try {
       const deletedRows = await Basket.destroy({
         where: { id: req.body.id },
@@ -54,17 +65,6 @@ class BasketController {
       } else {
         res.status(404).json({ message: "Basket item not found." });
       }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Internal Server Error" });
-    }
-  }
-
-  async createBasketDevice(req, res) {
-    try {
-      const { basketId, deviceId } = req.body;
-      const basketdevice = await BasketDevice.create({ basketId, deviceId });
-      return res.json(basketdevice);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error" });
