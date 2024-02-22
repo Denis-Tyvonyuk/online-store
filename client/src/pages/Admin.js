@@ -6,6 +6,7 @@ import CreateType from "../components/modals/CreateType";
 import DeleteType from "../components/modals/DeleteType";
 import DeleteBrand from "../components/modals/DeleteBrand";
 import { Context } from "..";
+import DeleteDevice from "../components/modals/DeleteDevice";
 
 const Admin = () => {
   const { device } = useContext(Context);
@@ -13,6 +14,7 @@ const Admin = () => {
   const [brandVisible, setBrandVisible] = useState(false);
   const [typeVisible, setTypeVisible] = useState(false);
   const [deviceVisible, setDeviceVisible] = useState(false);
+  const [deleteDeviceVisible, setDeleteDeviceVisible] = useState(false);
   const [deleteTypeVisible, setdeleteTypeVisible] = useState(false);
   const [deleteBrandVisible, setdeleteBrandVisible] = useState(false);
 
@@ -40,18 +42,25 @@ const Admin = () => {
         add device
       </Button>
       <Button
-        variant={"outline-dark"}
+        variant={"danger"}
         className="mt-2"
         onClick={() => setdeleteTypeVisible(true)}
       >
         delete type
       </Button>
       <Button
-        variant={"outline-dark"}
+        variant={"danger"}
         className="mt-2"
         onClick={() => setdeleteBrandVisible(true)}
       >
         delete brand
+      </Button>
+      <Button
+        variant={"danger"}
+        className="mt-2"
+        onClick={() => setDeleteDeviceVisible(true)}
+      >
+        delete device
       </Button>
       <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} />
       <CreateDevice
@@ -67,6 +76,11 @@ const Admin = () => {
       <DeleteBrand
         show={deleteBrandVisible}
         onHide={() => setdeleteBrandVisible(false)}
+        device={device}
+      />
+      <DeleteDevice
+        show={deleteDeviceVisible}
+        onHide={() => setDeleteDeviceVisible(false)}
         device={device}
       />
     </Container>

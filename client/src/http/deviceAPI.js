@@ -56,6 +56,21 @@ export const createDevice = async (device) => {
   return data;
 };
 
+export const deleteDevice = async (deviceName) => {
+  try {
+    const response = await $authHost.delete("api/device", {
+      data: { name: deviceName },
+    });
+
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting device:", error);
+    // You might want to handle the error or log it appropriately
+    throw error; // Rethrow the error if needed
+  }
+};
+
 export const fetchDevices = async (typeId, brandId, page, limit = 5) => {
   const { data } = await $host.get("api/device", {
     params: {

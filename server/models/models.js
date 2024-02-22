@@ -49,6 +49,8 @@ const Brand = sequelize.define("brand", {
 
 const Rating = sequelize.define("rating", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  userId: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
+  deviceId: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
   rate: { type: DataTypes.INTEGER, allowNull: false },
 });
 

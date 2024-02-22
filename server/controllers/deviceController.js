@@ -36,6 +36,26 @@ class DeviceController {
     }
   }
 
+  async deleteDevice(req, res) {
+    try {
+      const { name } = req.body;
+      console.log(name);
+      const device = await Device.destroy({
+        where: { name: name },
+      });
+
+      if (device) {
+        res.status(200).json({ message: "Device deleted successfully." });
+      } else {
+        //need fix
+        res.status(200).json({ message: "Device not found." });
+      }
+    } catch (error) {
+      console.error("Error deleting device:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
   async getAll(req, res) {
     let { brandId, typeId, limit, page } = req.query;
     page = page || 1;
