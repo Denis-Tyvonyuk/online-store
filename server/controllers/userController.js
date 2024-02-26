@@ -67,11 +67,7 @@ class UserController {
       const token = req.headers.authorization.split(" ")[1];
       return res.json({ token });
     } catch (e) {
-      console.log(
-        "sdaefsgddsfdsfdsf /n",
-        req.headers.authorization,
-        "/n ssdsasassasa"
-      );
+      console.log(req.headers.authorization);
 
       return res.json({ token });
     }
