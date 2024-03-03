@@ -1,2 +1,3 @@
 cd client 'npm start'
-cd server 'npm run dev'
+
+cd server 'npm run dev'  
