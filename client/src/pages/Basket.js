@@ -57,7 +57,7 @@ const Basket = observer(() => {
     <Row className="d-flex">
       {/* Render your devices based on deviceInfo */}
       {dev &&
-        dev.map((device) => <DeviceItem key={device.id} device={device} />)}
+        dev.map((device, index) => <DeviceItem key={index} device={device} />)}
     </Row>
   );
 });

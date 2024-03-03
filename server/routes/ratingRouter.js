@@ -1,9 +1,9 @@
 const Router = require("express");
 const router = new Router();
 const checkRole = require("../middleware/checkRoleMiddleware");
-const rateController = require("../controllers/ratingController");
+const ratingController = require("../controllers/ratingController");
 
-router.post("/", rateController.addRating);
-router.get("/", rateController.getDeviceRating);
+router.post("/", ratingController.addRating);
+router.get("/", ratingController.getDeviceRating);
 
 module.exports = router;

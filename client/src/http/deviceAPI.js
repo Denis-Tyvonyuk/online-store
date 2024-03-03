@@ -124,3 +124,32 @@ export const getBasketDevice = async (basketId) => {
     throw error; // rethrow the error so it can be handled by the calling code
   }
 };
+
+export const addRating = async (userId, deviceId, rating) => {
+  try {
+    const { data } = await $authHost.post("api/rating/", {
+      userId: userId,
+      deviceId: deviceId,
+      rating: rating,
+    });
+
+    return data;
+  } catch (error) {
+    console.error("addRating error:", error);
+  }
+};
+
+export const getRating = async (deviceId) => {
+  try {
+    const { data } = await $host.get("api/rating/", {
+      params: { deviceId: deviceId },
+    });
+    if (data !== "Nan") {
+      return data;
+    } else {
+      return 0;
+    }
+  } catch (error) {
+    console.error("getRating error:", error);
+  }
+};

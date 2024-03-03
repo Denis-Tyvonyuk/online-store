@@ -7,6 +7,8 @@ import {
   createBasketDevice,
   createOrGetBasket,
   getBasket,
+  addRating,
+  getRating,
 } from "../http/deviceAPI";
 import { Context } from "..";
 import { getUserInfo } from "../http/userAPI";
@@ -16,22 +18,26 @@ const DevicePage = () => {
   const [userId, setUserId] = useState();
   const { id } = useParams();
   const [basketId, setBasketId] = useState();
+  const [deviceRating, setDeviceRating] = useState();
+  const rating = [1, 2, 3, 4, 5];
 
   useEffect(() => {
     fetchOneDevice(id).then((data) => setDevice(data));
+    getRating(id).then((data) => setDeviceRating(data));
   }, []);
 
   useEffect(() => {
     const func = async () => {
       // Fetch user info and handle the promise
       await getUserInfo().then((user) => {
-        if ((user = "the user is not registered")) {
-        } else {
+        if (user !== "the user is not registered") {
           setUserId(user.id);
 
           createOrGetBasket(user.id).then((basket) => {
             setBasketId(basket);
           });
+        } else {
+          console.log("user not register");
         }
       });
       // Create or get basket and handle the promise
@@ -53,16 +59,36 @@ const DevicePage = () => {
           <Row className="d-flex  align-items-center">
             <h2>{device.name}</h2>
             <div
-              className="d-flex align-items-center justify-content-center"
+              className="Row"
               style={{
-                background: `url(${bigStar}) no-repeat center center`,
-                width: 240,
-                height: 240,
-                backgroundSize: "cover",
-                fontSize: 64,
+                height: 50,
+                width: 150,
+                display: "flex",
+                flexDirection: "column",
+                flexWrap: "wrap",
               }}
             >
-              {device.rating}
+              {rating.map((rating) => (
+                <div
+                  className="label"
+                  key={rating}
+                  style={{
+                    background: `url(${bigStar}) no-repeat center center`,
+                    width: 50,
+                    height: 50,
+                    backgroundSize: "cover",
+                    fontSize: 30,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    addRating(userId, device.id, rating);
+                    console.log(rating, device.id, userId);
+                  }}
+                >
+                  {rating}
+                </div>
+              ))}
+              <h1>{deviceRating}</h1>
             </div>
           </Row>
         </Col>

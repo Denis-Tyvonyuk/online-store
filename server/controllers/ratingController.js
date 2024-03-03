@@ -28,22 +28,24 @@ class RatingController {
 
   async getDeviceRating(req, res, next) {
     try {
-      const { deviceId } = req.body;
+      const { deviceId } = req.query;
+      //console.log(deviceId);
       const deviceRatings = await Rating.findAll({
-        where: { deviceId },
+        where: { deviceId: deviceId },
       });
       const ratingsArray = [];
       let userCount = 0;
 
       deviceRatings.forEach((element) => {
-        console.log(element.rating);
         userCount++;
+
         ratingsArray.push(element.rating);
       });
 
       const countRating = ratingsArray.reduce((sum, rating) => sum + rating, 0);
+      const ratingValue = countRating / userCount;
 
-      return res.json(countRating / userCount);
+      return res.json(ratingValue.toFixed(1));
     } catch (error) {
       next(ApiError.internal("Failed to fetch device ratings", error));
     }
