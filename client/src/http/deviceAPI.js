@@ -125,6 +125,18 @@ export const getBasketDevice = async (basketId) => {
   }
 };
 
+export const deleteBasketDevice = async (basketId, deviceId) => {
+  try {
+    const { data } = await $host.delete("api/basket/device/", {
+      data: { basketId: basketId, deviceId: deviceId },
+    });
+
+    return data;
+  } catch (error) {
+    console.error("deleteBasketDevice error:", error);
+  }
+};
+
 export const addRating = async (userId, deviceId, rating) => {
   try {
     const { data } = await $authHost.post("api/rating/", {
@@ -141,15 +153,18 @@ export const addRating = async (userId, deviceId, rating) => {
 
 export const getRating = async (deviceId) => {
   try {
-    const { data } = await $host.get("api/rating/", {
+    const { data } = await $authHost.get("api/rating", {
       params: { deviceId: deviceId },
     });
-    if (data !== "Nan") {
+
+    // Check if data is not null or undefined
+    if (data !== null && data !== undefined && !isNaN(data)) {
       return data;
     } else {
       return 0;
     }
   } catch (error) {
     console.error("getRating error:", error);
+    return 0; // Return a default value in case of an error
   }
 };

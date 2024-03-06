@@ -43,6 +43,7 @@ const DevicePage = () => {
       // Create or get basket and handle the promise
     };
     func();
+    console.log(device);
   }, []);
 
   return (

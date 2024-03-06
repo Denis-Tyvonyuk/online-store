@@ -69,7 +69,7 @@ class UserController {
     } catch (e) {
       console.log(req.headers.authorization);
 
-      return res.json({ token });
+      return res.status(200);
     }
   }
 }

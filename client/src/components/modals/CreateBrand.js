@@ -24,7 +24,7 @@ const CreateBrand = ({ show, onHide }) => {
           <Form.Control
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            placeholder={"type name "}
+            placeholder={"enter brand name "}
           />
         </Form>
       </Modal.Body>

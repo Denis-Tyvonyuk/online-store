@@ -56,8 +56,9 @@ class BasketController {
 
   async deleteBasketDevice(req, res) {
     try {
+      const { basketId, deviceId } = req.body;
       const deletedRows = await BasketDevice.destroy({
-        where: { basketId: req.body.basketId, deviceId: req.body.deviceId },
+        where: { basketId: basketId, deviceId: deviceId },
       });
 
       if (deletedRows > 0) {
@@ -78,7 +79,7 @@ class BasketController {
       console.log(req.query);
 
       const allbasketdevice = await BasketDevice.findAll({
-        where: { basketId: 16 },
+        where: { basketId: basketId },
       });
       return res.json(allbasketdevice);
     } catch (e) {
